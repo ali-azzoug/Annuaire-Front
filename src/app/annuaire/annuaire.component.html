@@ -1,0 +1,107 @@
+
+
+<div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Rechercher" (keydown.enter)="searchData()" [(ngModel)]="query">
+    <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)='searchData()'>Recherche</button>
+</div>
+  
+<br/>
+
+<div class="col-md-12">
+<div class="table-responsive">
+    <table class="table table-hover table-sm">
+        <tbody>
+            <tr>
+                <th class="w-25">Nom</th>
+                <th class="w-25">Prénom</th>
+                <th class="w-25">Email</th>
+                <th class="w-50">Tel</th>
+            </tr>
+            <tr *ngFor="let user of listeUsers">
+                <td>{{user.nom}}</td>
+                <td>{{user.prenom}}</td>
+                <td>{{user.email}} <button (click)="Upgrade(user.email)" *ngIf="roles==='admin'" type="button" class="btn btn-outline-primary btn-sm rounded mx-3">upgrade</button></td>
+                <td>{{user.tel}} <button (click)="removeUser(user.email)" *ngIf="roles==='admin'" type="button" class="btn btn-outline-danger btn-sm rounded-circle mx-3">X</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div *ngIf="roles==='admin'" class="row">
+    <div class="col-5 alert alert-primary">
+        <div class="col-12">Ajouter un nouvel utilisateur</div>
+        <br/>
+        <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm" >email</span>
+            </div>
+            <input [(ngModel)]="addEmail" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm">nom</span>
+            </div>
+            <input [(ngModel)]="addNom" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm">prénom</span>
+            </div>
+            <input [(ngModel)]="addPrenom" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm">telephone</span>
+            </div>
+            <input [(ngModel)]="addTel" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm">mot de passe</span>
+            </div>
+            <input [(ngModel)]="addPassword" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <button (click)="addUser()" type="button" class="btn btn-outline-primary  ">Valider</button>
+        
+    </div>
+
+    <div class="col-1"></div>
+
+    <div class="col-5 alert alert-warning">
+        <div class="col-12">Modifier un utilisateur</div>
+        <br/>
+        <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm" >email</span>
+            </div>
+            <input [(ngModel)]="setEmail" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm">nom</span>
+            </div>
+            <input [(ngModel)]="setNom" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm">prénom</span>
+            </div>
+            <input [(ngModel)]="setPrenom" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm">telephone</span>
+            </div>
+            <input [(ngModel)]="setTel" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm">mot de passe</span>
+            </div>
+            <input [(ngModel)]="setPassword" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <button (click)="setUser()" type="button" class="btn btn-outline-danger  ">Valider</button>
+    </div>
+</div>
+</div>
+
+
