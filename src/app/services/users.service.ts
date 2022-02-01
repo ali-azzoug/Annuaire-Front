@@ -1,11 +1,23 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+const USERS_API = 'http://localhost:8080/api/user/'
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  getAllUsers(): Observable<any> {
+    return this.http.get(USERS_API + 'findAllUsers', httpOptions);
+  }
 
   addUser(email: any, nom: any, prenom: any, tel: any, password: any) {}
   removeUser(email: string) {}

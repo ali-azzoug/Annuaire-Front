@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../services/users.service';
 import { AuthentificationService } from '../services/authentification.service'; 
+import { TokenStorageService } from '../services/token-storage.service';
+
 
 @Component({
   selector: 'app-annuaire',
@@ -8,45 +10,64 @@ import { AuthentificationService } from '../services/authentification.service';
   styleUrls: ['./annuaire.component.scss']
 })
 export class AnnuaireComponent implements OnInit {
-  isAdmin = true;
+  private roles: string[] = [];
+  isLoggedIn = false;
+  isAdmin = false;
+  isUser = false;
+  user?: string;
+
   query = "" // mots clés moteur de recherche
-  roles= "user"
 
   addEmail: any; addNom: any; addPrenom: any; addTel: any ; addPassword: any;
 
   setEmail: any; setNom: any; setPrenom: any; setTel: any ; setPassword: any;
+  errorMessage: any;
+
+  listeUsers: any;
 
 
 
   constructor(
     private usersservice: UsersService,
     private auth: AuthentificationService,
+    private tokenStorageService: TokenStorageService
 
-  ) {
-    this.roles = this.getUserRoles();
-   }
+  ) { }
 
   ngOnInit(): void {
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+    console.log(' connecté ? ',this.isLoggedIn)
+    console.log(' roles : ', this.roles)
+
+    if (this.isLoggedIn) {
+      const user = this.tokenStorageService.getUser();
+      this.roles = user.roles;
+
+      this.isAdmin = this.roles.includes('ROLE_ADMIN');
+      this.isUser = this.roles.includes('ROLE_USER');
+
+      console.log('isAdmin ',this.isAdmin )
+      console.log('isUser ',this.isUser )
+
+      this.user = user;
+
+      console.log('user data : ', user);
+      this.getAllUsers();
+    }
   }
-  listeUsers = [{
-    nom : "a",
-    prenom : "aad",
-    email: "j@j.com",
-    tel: "00000000",
-  },
-  {
-    nom : "a",
-    prenom : "aad",
-    email: "j@j.com",
-    tel: "00000000",
-  },  
-  {
-    nom : "azzoug",
-    prenom : "",
-    email: "a@azzoug.com",
-    tel: "0123456789",
-  },
-  ]
+
+
+  
+
+  getAllUsers() {
+    this.usersservice.getAllUsers().subscribe(
+      data => {
+        this.listeUsers = data.users;
+      }, err => {
+        this.errorMessage = err.error.message;
+      }
+      );
+  }
 
   UserExists(email: string): boolean {
     return this.usersservice.CheckExistingUser(email);
@@ -78,9 +99,6 @@ export class AnnuaireComponent implements OnInit {
     }
   }
 
-  getUserRoles() {
-    return this.auth.getRoles();
-  }
 
   searchData(){
     this.usersservice.searchUsers(this.query);

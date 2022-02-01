@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { Routes, RouterModule} from '@angular/router';
@@ -15,7 +16,7 @@ const appRoutes: Routes = [
   { path: 'inscription', component : InscriptionComponent},
   { path: 'profil', component : ProfilComponent},
   { path: 'annuaire', component : AnnuaireComponent},
-  { path: '', component : ConnexionComponent}, 
+  { path: '', component : AnnuaireComponent}, 
 ]
 
 @NgModule({
@@ -29,6 +30,7 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),
   ],

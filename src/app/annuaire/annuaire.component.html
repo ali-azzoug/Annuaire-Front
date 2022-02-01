@@ -18,15 +18,15 @@
                 <th class="w-50">Tel</th>
             </tr>
             <tr *ngFor="let user of listeUsers">
-                <td>{{user.nom}}</td>
-                <td>{{user.prenom}}</td>
-                <td>{{user.email}} <button (click)="Upgrade(user.email)" *ngIf="roles==='admin'" type="button" class="btn btn-outline-primary btn-sm rounded mx-3">upgrade</button></td>
-                <td>{{user.tel}} <button (click)="removeUser(user.email)" *ngIf="roles==='admin'" type="button" class="btn btn-outline-danger btn-sm rounded-circle mx-3">X</button></td>
+                <td>{{user?.nom}}</td>
+                <td>{{user?.prenom}}</td>
+                <td>{{user?.email}} <button (click)="Upgrade(user.email)" *ngIf="isAdmin" type="button" class="btn btn-outline-primary btn-sm rounded mx-3">upgrade</button></td>
+                <td>{{user?.telephone}} <button (click)="removeUser(user.email)" *ngIf="isAdmin" type="button" class="btn btn-outline-danger btn-sm rounded-circle mx-3">X</button></td>
             </tr>
         </tbody>
     </table>
 </div>
-<div *ngIf="roles==='admin'" class="row">
+<div *ngIf="isAdmin" class="row">
     <div class="col-5 alert alert-primary">
         <div class="col-12">Ajouter un nouvel utilisateur</div>
         <br/>
