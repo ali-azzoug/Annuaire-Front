@@ -1,6 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {User} from "../models/user.model";
+import {UsersService} from "../services/users.service";
+import {RoleService} from "../services/role.service";
 
 @Component({
   selector: 'app-user-dialog',
@@ -14,9 +16,13 @@ export class UserDialogComponent implements OnInit {
   type:any;
   DisableInput=false;
   title = '';
+  role = '';
+  disableEmailInput=true;
   constructor(
     public dialogRef: MatDialogRef<UserDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private usersService: UsersService,
+    private roleService: RoleService,
   ) {}
 
   ngOnInit() {
@@ -25,34 +31,52 @@ export class UserDialogComponent implements OnInit {
       this.id = this.data.id;
       this.user = this.data.user;
       this.DisableInput = true;
-      this.title = "Afficher l'utilisateur";
+      this.title = "Display User";
+      if(this.user.id != null){
+        this.roleService.getAllRolesByUserId(this.user.id).subscribe(
+          (data)=> {
+            this.role = data.roles;
+          }
+        );
+      }
+
     }else if(this.type == "Edit"){
       this.id = this.data.id;
       this.user = this.data.user;
-      this.title = "Modifier l'utilisateur";
+      this.title = "Edit User";
     }else if(this.type == "New"){
       this.user = new User();
-      this.title = "Ajouter un nouvel utilisateur";
+      this.disableEmailInput=false;
+      this.title = "Create new User";
     }
 
     if(this.id != "" && this.user != ""){
         //getAllInfo with role
     }
-
-
   }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
   onClick(): void {
-    /*this.playlistService.addPlaylistByUser(this.id, this.name).subscribe(
-      (data:any) => {
-        if(data.status != 'Error'){
+    if(this.type == "Edit"){
+      let tempuser = this.user;
+      tempuser.email = 'test@'
+      this.usersService.updateUser(tempuser).subscribe(
+        (data) => {
+          console.log(data);
           this.dialogRef.close('ok');
         }
-      }
-    )*/
+      );
+    }else if(this.type == "New"){
+      console.log(this.user);
+      this.usersService.createUser(this.user).subscribe(
+        (data) => {
+          console.log(data);
+          this.dialogRef.close('ok');
+        }
+      );
+    }
   }
 
 }

@@ -1,8 +1,7 @@
 <div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
     <div class="card p-4">
-        <div class=" image d-flex flex-column justify-content-center align-items-center"> <button class="btn btn-secondary"> <img src="https://i.imgur.com/wvxPV9S.png" height="100" width="100" /></button> <span class="name mt-3">{{ currentUser.prenom }} {{currentUser.nom}}</span> 
-            <div class="d-flex flex-row justify-content-center align-items-center gap-2"> <span class="idd1">{{ currentUser.email }}</span> <span><i class="fa fa-copy"></i></span> </div>
-            <div class="d-flex flex-row justify-content-center align-items-center mt-3"> <span class="number" *ngFor="let role of currentUser.roles">{{ role }}</span> </div>
+        <div class=" image d-flex flex-column justify-content-center align-items-center"> <button class="btn btn-secondary"> <img src="https://i.imgur.com/wvxPV9S.png" height="100" width="100" /></button> <span class="name mt-3">{{ currentUser.prenom }} {{currentUser.nom}}</span>
+            <div class="d-flex flex-row justify-content-center align-items-center gap-2"> <span class="idd1">{{ user.email }}</span> <span><i class="fa fa-copy"></i></span> </div>
             <div class=" d-flex mt-2"> <button (click)="editProfil()" class="btn1 btn-dark">Edit Profile</button> </div>
 
             <div *ngIf="edit" class="alert alert-secondary">
@@ -11,30 +10,29 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroup-sizing-sm">nom</span>
                     </div>
-                    <input [(ngModel)]="setNom" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    <input [(ngModel)]="user.nom" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                 </div>
                 <div class="input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroup-sizing-sm">prénom</span>
                     </div>
-                    <input [(ngModel)]="setPrenom" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    <input [(ngModel)]="user.prenom" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                 </div>
                 <div class="input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroup-sizing-sm">telephone</span>
                     </div>
-                    <input [(ngModel)]="setTel" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    <input [(ngModel)]="user.telephone" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                 </div>
                 <div class="input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroup-sizing-sm">mot de passe</span>
                     </div>
-                    <input [(ngModel)]="setPassword" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                 </div>
                 <button (click)="setUser()" type="button" class="btn btn-outline-primary btn-lg">Valider</button>
             </div>
 
-            <div class="text mt-3"> <span>{{ currentUser.prenom }} {{currentUser.nom}} is a creator of minimalistic x bold graphics and digital artwork.<br><br> Artist/ Creative Director by Day #NFT minting@ with FND night. </span> </div>
             <div class="gap-3 mt-3 icons d-flex flex-row justify-content-center align-items-center"> <span><i class="fa fa-twitter"></i></span> <span><i class="fa fa-facebook-f"></i></span> <span><i class="fa fa-instagram"></i></span> <span><i class="fa fa-linkedin"></i></span> </div>
             <div class=" px-2 rounded mt-4 date "> <span class="join">Joined May,2021</span> </div>
         </div>

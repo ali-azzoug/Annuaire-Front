@@ -80,23 +80,28 @@ export class AnnuaireComponent implements OnInit {
     this.listeUsers.length === 0 ? this.emptyList = true:this.emptyList = false;
   }
 
-  removeUser(email: string) {
-    this.usersservice.removeUser(email);
-  }
-
   openDialog(id:any,type:string,user:any): void {
     const dialogRef = this.dialog.open(UserDialogComponent, {
       width: '80%',
-      height: '90%',
+      height: '60%',
       data: {id: id,type:type,user:user},
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       if(result === 'ok'){
-        //setRecord
+        this.getAllUsers();
       }
     });
+  }
+
+  deleteUserById(id:number){
+    this.usersservice.deleteUserById(id).subscribe(
+      (data) => {
+        console.log(data);
+        this.getAllUsers();
+      }
+    )
   }
 
 

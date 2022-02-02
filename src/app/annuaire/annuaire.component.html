@@ -25,7 +25,7 @@
                 <td>{{user?.email}}</td>
                 <td>{{user?.telephone}}</td>
               <td>
-                <button (click)="removeUser(user.email)" *ngIf="isAdmin" type="button" class="btn btn-outline-danger btn-sm rounded-circle mx-3">Delete</button>
+                <button (click)="deleteUserById(user.id)" *ngIf="isAdmin" type="button" class="btn btn-outline-danger btn-sm rounded-circle mx-3">Delete</button>
                 <button (click)="openDialog(user?.id,'Edit',user)" *ngIf="isAdmin" type="button" class="btn btn-outline-primary btn-sm rounded-circle mx-3">Edit</button>
                 <button (click)="openDialog(user?.id,'Details',user)" *ngIf="isAdmin" type="button" class="btn btn-outline-success btn-sm rounded mx-3">Details</button>
 

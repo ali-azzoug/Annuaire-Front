@@ -20,6 +20,7 @@ const appRoutes: Routes = [
   { path: 'profil', component : ProfilComponent},
   { path: 'annuaire', component : AnnuaireComponent},
   { path: '', component : AnnuaireComponent},
+  { path: '**', redirectTo: 'connexion' }
 ]
 
 @NgModule({
