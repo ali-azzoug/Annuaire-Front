@@ -10,13 +10,16 @@ import { InscriptionComponent } from './inscription/inscription.component';
 import { ConnexionComponent } from './connexion/connexion.component';
 import { ProfilComponent } from './profil/profil.component';
 import { AnnuaireComponent } from './annuaire/annuaire.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UserDialogComponent } from './user-dialog/user-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 const appRoutes: Routes = [
   { path: 'connexion', component : ConnexionComponent},
   { path: 'inscription', component : InscriptionComponent},
   { path: 'profil', component : ProfilComponent},
   { path: 'annuaire', component : AnnuaireComponent},
-  { path: '', component : AnnuaireComponent}, 
+  { path: '', component : AnnuaireComponent},
 ]
 
 @NgModule({
@@ -25,7 +28,8 @@ const appRoutes: Routes = [
     InscriptionComponent,
     ConnexionComponent,
     ProfilComponent,
-    AnnuaireComponent
+    AnnuaireComponent,
+    UserDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +37,8 @@ const appRoutes: Routes = [
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),
+    BrowserAnimationsModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

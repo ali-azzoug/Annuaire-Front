@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../services/users.service';
-import { AuthentificationService } from '../services/authentification.service'; 
+import { AuthentificationService } from '../services/authentification.service';
 import { TokenStorageService } from '../services/token-storage.service';
+import {User} from "../models/user.model";
+import {MatDialog} from "@angular/material/dialog";
+import {UserDialogComponent} from "../user-dialog/user-dialog.component";
 
 
 @Component({
@@ -16,22 +19,20 @@ export class AnnuaireComponent implements OnInit {
   isUser = false;
   user?: string;
 
-  query = "" // mots clés moteur de recherche
-
-  addEmail: any; addNom: any; addPrenom: any; addTel: any ; addPassword: any;
-
-  setEmail: any; setNom: any; setPrenom: any; setTel: any ; setPassword: any;
   errorMessage: any;
-
   listeUsers: any;
 
-
+  userObj: User = new User();
+  userEdit :User = new User();
+  usersObj:User[] = [];
+  initList: any;
+  emptyList= false;
 
   constructor(
     private usersservice: UsersService,
     private auth: AuthentificationService,
-    private tokenStorageService: TokenStorageService
-
+    private tokenStorageService: TokenStorageService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -57,60 +58,46 @@ export class AnnuaireComponent implements OnInit {
   }
 
 
-  
-
   getAllUsers() {
     this.usersservice.getAllUsers().subscribe(
       data => {
         this.listeUsers = data.users;
+        this.initList = data.users;
       }, err => {
         this.errorMessage = err.error.message;
       }
       );
   }
 
-  UserExists(email: string): boolean {
-    return this.usersservice.CheckExistingUser(email);
-  }
-
-  setUser() {
-    if(!this.UserExists(this.setEmail)) {alert('aucun utilisateur ne correspond a cet email')}
-    else {
-      this.usersservice.setUser(this.setEmail, this.setNom, this.setPrenom, this.setTel, this.setPassword);
-      this.setEmail = "";
-      this.setNom= "";
-      this.setPrenom = "";
-      this.setTel = "";
-      this.setPassword = "";
-      alert('Profil mis a jour avec succès !')
+  searchData(event:any){
+    if(event.target.value != ""){
+      this.usersObj = this.listeUsers;
+      this.listeUsers = this.usersObj.filter(x => x.nom?.includes(event.target.value) || x.prenom?.includes(event.target.value) );
     }
-  }
-
-  addUser() {
-    if(this.UserExists(this.addEmail)) {alert('cet utilisateur exist déjà')}
     else {
-      this.usersservice.setUser(this.addEmail, this.addNom, this.addPrenom, this.addTel, this.addPassword);
-      this.addEmail = "";
-      this.addNom= "";
-      this.addPrenom = "";
-      this.addTel = "";
-      this.addPassword = "";
-      alert('Utilisateur ajouté avec succès !')
+      this.listeUsers = this.initList;
     }
-  }
-
-
-  searchData(){
-    this.usersservice.searchUsers(this.query);
-    //
+    this.listeUsers.length === 0 ? this.emptyList = true:this.emptyList = false;
   }
 
   removeUser(email: string) {
     this.usersservice.removeUser(email);
   }
 
-  Upgrade(email: string) {
-    this.usersservice.upgradeUser(email);
+  openDialog(id:any,type:string,user:any): void {
+    const dialogRef = this.dialog.open(UserDialogComponent, {
+      width: '80%',
+      height: '90%',
+      data: {id: id,type:type,user:user},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if(result === 'ok'){
+        //setRecord
+      }
+    });
   }
+
 
 }
